@@ -41,3 +41,12 @@ export function hoyLocalISO(ahora = new Date()) {
   const dos = (n) => String(n).padStart(2, '0');
   return `${ahora.getFullYear()}-${dos(ahora.getMonth() + 1)}-${dos(ahora.getDate())}`;
 }
+
+/** Teléfono ecuatoriano normalizado: '0991234567' -> '099 123 4567', '022345678' -> '02 234 5678'. Otro valor se devuelve igual. */
+export function formatearTelefono(valor, vacio = '—') {
+  const t = String(valor ?? '').trim();
+  if (!t) return vacio;
+  if (/^09\d{8}$/.test(t)) return `${t.slice(0, 3)} ${t.slice(3, 6)} ${t.slice(6)}`;
+  if (/^0[2-7]\d{7}$/.test(t)) return `${t.slice(0, 2)} ${t.slice(2, 5)} ${t.slice(5)}`;
+  return t;
+}

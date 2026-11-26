@@ -11,6 +11,9 @@ import ProductoDetallePage from './pages/ProductoDetallePage.jsx';
 import MovimientosPage from './pages/MovimientosPage.jsx';
 import AlertasInventarioPage from './pages/AlertasInventarioPage.jsx';
 import CategoriasUnidadesPage from './pages/CategoriasUnidadesPage.jsx';
+import TiendasPage from './pages/TiendasPage.jsx';
+import TiendaDetallePage from './pages/TiendaDetallePage.jsx';
+import RutasPage from './pages/RutasPage.jsx';
 import NoEncontradoPage from './pages/NoEncontradoPage.jsx';
 
 export default function App() {
@@ -30,6 +33,9 @@ export default function App() {
               <Route path="productos/alertas" element={<AlertasInventarioPage />} />
               <Route path="productos/categorias" element={<CategoriasUnidadesPage />} />
               <Route path="productos/:id" element={<ProductoDetallePage />} />
+              <Route path="tiendas" element={<TiendasPage />} />
+              <Route path="tiendas/rutas" element={<RutasPage />} />
+              <Route path="tiendas/:id" element={<TiendaDetallePage />} />
             </Route>
           </Route>
           <Route path="*" element={<NoEncontradoPage />} />

@@ -39,7 +39,26 @@ export const MENSAJES = {
   LOTE_CADUCIDAD_DISTINTA: 'Ese lote ya existe con otra fecha de caducidad.',
   PRODUCTO_SIN_LOTES: 'La categoría de este producto no controla lotes.',
   STOCK_INSUFICIENTE: 'Stock insuficiente.',
+  CLIENTE_DUPLICADO: 'Ya existe una tienda con ese nombre.',
+  CLIENTE_NO_ENCONTRADO: 'La tienda no existe.',
+  CLIENTE_INACTIVO: 'La tienda está inactiva.',
+  RUTA_DUPLICADA: 'Ya existe una ruta con ese nombre.',
+  RUTA_NO_ENCONTRADA: 'La ruta ya no existe.',
+  RUTA_INACTIVA: 'La ruta está inactiva. Elija otra.',
+  RUTA_EN_USO: 'No se puede desactivar: hay tiendas activas asignadas a esta ruta.',
+  CREDITO_INSUFICIENTE: 'El monto supera el crédito disponible de la tienda.',
 };
+
+export const CODIGOS_CLIENTES = [
+  'CLIENTE_DUPLICADO',
+  'CLIENTE_NO_ENCONTRADO',
+  'CLIENTE_INACTIVO',
+  'RUTA_DUPLICADA',
+  'RUTA_NO_ENCONTRADA',
+  'RUTA_INACTIVA',
+  'RUTA_EN_USO',
+  'CREDITO_INSUFICIENTE',
+];
 
 export const CODIGOS_INVENTARIO = [
   'UNIDAD_DUPLICADA',
@@ -114,7 +133,7 @@ export function mensajeError(e) {
         ? `Stock insuficiente. Disponible: ${e.detalles.disponible}.`
         : e.mensaje || MENSAJES.STOCK_INSUFICIENTE;
     default:
-      if (CODIGOS_INVENTARIO.includes(e.codigo)) return MENSAJES[e.codigo];
+      if (CODIGOS_INVENTARIO.includes(e.codigo) || CODIGOS_CLIENTES.includes(e.codigo)) return MENSAJES[e.codigo];
       if (esServicioNoDisponible(e)) return MENSAJES.SERVICIO_NO_DISPONIBLE;
       return MENSAJES.GENERICO;
   }

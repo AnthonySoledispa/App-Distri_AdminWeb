@@ -143,18 +143,18 @@ test.describe('Sesión y navegación (RF-03, RF-05, RF-06)', () => {
     }
   });
 
-  test('W18: el menú tiene 3 enlaces y 6 secciones deshabilitadas', async ({ page, request }) => {
+  test('W18: el menú tiene 4 enlaces y 5 secciones deshabilitadas', async ({ page, request }) => {
     await entrarComoAdmin(page, request);
     const barra = page.getByRole('navigation', { name: 'Principal' });
-    await expect(barra.locator('a')).toHaveCount(3);
-    await expect(barra.locator('[aria-disabled="true"]')).toHaveCount(6);
-    await expect(barra.getByText('Próximamente')).toHaveCount(6);
+    await expect(barra.locator('a')).toHaveCount(4);
+    await expect(barra.locator('[aria-disabled="true"]')).toHaveCount(5);
+    await expect(barra.getByText('Próximamente')).toHaveCount(5);
     await expect(barra.getByRole('link', { name: 'Inicio' })).toHaveAttribute('aria-current', 'page');
 
     // En una subsección de productos, "Productos" sigue marcado como actual (el contador no altera los conteos).
     await page.goto('/productos/alertas');
     await expect(barra.getByRole('link', { name: /^Productos/ })).toHaveAttribute('aria-current', 'page');
-    await expect(barra.locator('a')).toHaveCount(3);
+    await expect(barra.locator('a')).toHaveCount(4);
   });
 
   test('menú colapsable en tablet: abre con el botón y cierra con Esc', async ({ page, request }) => {

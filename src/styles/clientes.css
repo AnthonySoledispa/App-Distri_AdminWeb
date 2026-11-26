@@ -1,0 +1,83 @@
+/* Módulo 3: clientes (tiendas) y rutas. Solo variables de color existentes. */
+
+/* Insignias (siempre con texto, nunca solo color) */
+.insignia--credito-excedido,
+.insignia--pedido-cancelado {
+  background: var(--color-error-fondo);
+  color: var(--color-error);
+}
+.insignia--pedido-pendiente {
+  background: var(--color-alerta-fondo);
+  color: var(--color-alerta-texto);
+}
+.insignia--pedido-despachado {
+  background: var(--color-ruta-tenue);
+  color: #0b4f8a;
+}
+.insignia--pedido-entregado {
+  background: var(--color-exito-fondo);
+  color: var(--color-exito-texto);
+}
+
+.tabla td.tabla__telefono {
+  white-space: nowrap;
+}
+
+/* Ficha de la tienda: datos y resumen de crédito lado a lado */
+.ficha-tienda {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(260px, 2fr);
+  gap: var(--esp-6);
+  margin-bottom: var(--esp-8);
+  align-items: start;
+}
+.ficha-tienda__datos {
+  display: block;
+  margin-bottom: 0;
+}
+
+.resumen-credito {
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: var(--esp-6);
+  display: grid;
+  gap: var(--esp-3);
+}
+.resumen-credito h3 {
+  font-family: var(--fuente-titulo);
+  font-size: 1.25rem;
+}
+.resumen-credito__nota {
+  color: var(--color-texto-suave);
+}
+.resumen-credito__cifras {
+  display: grid;
+  gap: var(--esp-3);
+}
+.resumen-credito__cifras > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--esp-4);
+  padding-bottom: var(--esp-2);
+  border-bottom: 1px solid var(--color-borde);
+}
+.resumen-credito__cifras dt {
+  font-size: 0.875rem;
+  color: var(--color-texto-suave);
+}
+.resumen-credito__cifras dd {
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+.resumen-credito__cifra--alerta dd {
+  color: var(--color-error);
+}
+
+@media (max-width: 900px) {
+  .ficha-tienda {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

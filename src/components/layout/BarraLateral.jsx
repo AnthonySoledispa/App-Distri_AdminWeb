@@ -19,7 +19,7 @@ const ICONOS = {
 const SECCIONES = [
   { etiqueta: 'Inicio', icono: 'inicio', ruta: '/', fin: true },
   { etiqueta: 'Productos', icono: 'productos', ruta: '/productos', contador: true },
-  { etiqueta: 'Tiendas', icono: 'tiendas' },
+  { etiqueta: 'Tiendas', icono: 'tiendas', ruta: '/tiendas' },
   { etiqueta: 'Pedidos', icono: 'pedidos' },
   { etiqueta: 'Rutas', icono: 'rutas' },
   { etiqueta: 'Cobros', icono: 'cobros' },

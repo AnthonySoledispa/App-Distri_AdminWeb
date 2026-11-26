@@ -34,9 +34,9 @@ async function llenarProducto(dialogo, { nombre, categoria, unidad, precio = '12
 test.describe('Navegación del Módulo 2', () => {
   test.skip(!hayCredenciales, 'Faltan credenciales de prueba (E2E_* o .env del backend).');
 
-  test('W33: Inicio muestra "2 de 8 disponibles" y "Gestionar productos" lleva a /productos', async ({ page, request }) => {
+  test('W33: Inicio muestra "3 de 8 disponibles" y "Gestionar productos" lleva a /productos', async ({ page, request }) => {
     await entrarComoAdmin(page, request);
-    await expect(page.getByText('2 de 8 disponibles')).toBeVisible();
+    await expect(page.getByText('3 de 8 disponibles')).toBeVisible();
     await page.getByRole('link', { name: 'Gestionar productos' }).click();
     await expect(page).toHaveURL(/\/productos$/);
     await expect(page.getByRole('button', { name: 'Nuevo producto' })).toBeVisible();

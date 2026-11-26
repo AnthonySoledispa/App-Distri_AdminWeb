@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatearCantidad, formatearDia, formatearMoneda, hoyLocalISO } from '../../src/utils/formato.js';
+import { formatearCantidad, formatearDia, formatearMoneda, formatearTelefono, hoyLocalISO } from '../../src/utils/formato.js';
 
 describe('U14 formato', () => {
   it('moneda USD en es-EC', () => {
@@ -27,5 +27,19 @@ describe('U14 formato', () => {
     expect(hoyLocalISO()).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     expect(hoyLocalISO(new Date(2026, 10, 5, 23, 59))).toBe('2026-11-05');
     expect(hoyLocalISO(new Date(2026, 0, 1, 0, 0))).toBe('2026-01-01');
+  });
+});
+
+describe('U21 formatearTelefono', () => {
+  it('celular y fijo con espacios', () => {
+    expect(formatearTelefono('0991234567')).toBe('099 123 4567');
+    expect(formatearTelefono('022345678')).toBe('02 234 5678');
+    expect(formatearTelefono('042345678')).toBe('04 234 5678');
+  });
+
+  it('vacío da el guion y un valor no reconocido se devuelve igual', () => {
+    expect(formatearTelefono(null)).toBe('—');
+    expect(formatearTelefono('')).toBe('—');
+    expect(formatearTelefono('12345')).toBe('12345');
   });
 });

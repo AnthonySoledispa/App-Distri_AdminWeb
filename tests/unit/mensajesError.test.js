@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { CODIGOS_INVENTARIO, MENSAJES, mensajeError, mensajeLogin, mensajeSesionInvalida } from '../../src/utils/mensajesError.js';
+import { CODIGOS_CLIENTES, CODIGOS_INVENTARIO, MENSAJES, mensajeError, mensajeLogin, mensajeSesionInvalida } from '../../src/utils/mensajesError.js';
 
 describe('mensajes de login (U08)', () => {
   it('cada código tiene su texto', () => {
@@ -77,5 +77,18 @@ describe('U15 mensajes del Módulo 2', () => {
 
   it('un código desconocido da el texto genérico', () => {
     expect(mensajeError({ estado: 409, codigo: 'NO_EXISTE_ESTE' })).toBe(MENSAJES.GENERICO);
+  });
+});
+
+describe('U15 mensajes del Módulo 3', () => {
+  it('cada código de clientes y rutas tiene texto en español', () => {
+    expect(CODIGOS_CLIENTES.length).toBe(8);
+    for (const codigo of CODIGOS_CLIENTES) {
+      const texto = mensajeError({ estado: 409, codigo });
+      expect(texto, codigo).toBe(MENSAJES[codigo]);
+      expect(texto, codigo).not.toBe(MENSAJES.GENERICO);
+    }
+    expect(mensajeError({ estado: 404, codigo: 'CLIENTE_NO_ENCONTRADO' })).toBe('La tienda no existe.');
+    expect(mensajeError({ estado: 409, codigo: 'RUTA_EN_USO' })).toContain('tiendas activas');
   });
 });

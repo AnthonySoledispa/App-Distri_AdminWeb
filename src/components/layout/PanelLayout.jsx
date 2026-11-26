@@ -15,6 +15,9 @@ function tituloDe(ruta) {
   if (ruta.startsWith('/productos/categorias')) return 'Categorías y unidades';
   if (/^\/productos\/[^/]+/.test(ruta)) return 'Producto';
   if (ruta.startsWith('/productos')) return 'Productos';
+  if (ruta.startsWith('/tiendas/rutas')) return 'Rutas de tiendas';
+  if (/^\/tiendas\/[^/]+/.test(ruta)) return 'Tienda';
+  if (ruta.startsWith('/tiendas')) return 'Tiendas';
   return 'Inicio';
 }
 
