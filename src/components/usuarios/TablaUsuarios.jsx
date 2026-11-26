@@ -3,6 +3,12 @@ import { formatearFecha } from '../../utils/formato.js';
 import Insignia from '../ui/Insignia.jsx';
 import Boton from '../ui/Boton.jsx';
 
+/** Dos iniciales para el avatar. Van en un atributo y se pintan con CSS, fuera del texto de la celda. */
+function iniciales(nombre = '') {
+  const partes = nombre.trim().split(/\s+/).filter(Boolean);
+  return ((partes[0]?.[0] ?? '') + (partes[1]?.[0] ?? '')).toUpperCase();
+}
+
 export default function TablaUsuarios({ usuarios, idActual, ocupado, onEditar, onCambiarEstado }) {
   return (
     <div className="tabla-caja">
@@ -32,12 +38,21 @@ export default function TablaUsuarios({ usuarios, idActual, ocupado, onEditar, o
                 return (
                   <tr key={u.id}>
                     <td>
-                      {u.nombre}
-                      {propio && <span className="tabla__yo"> (usted)</span>}
+                      <div className="tabla__persona">
+                        <span
+                          className={`avatar avatar--${activo ? u.rol : 'inactivo'}`}
+                          data-iniciales={iniciales(u.nombre)}
+                          aria-hidden="true"
+                        />
+                        <span>
+                          <strong>{u.nombre}</strong>
+                          {propio && <span className="tabla__yo">(usted)</span>}
+                        </span>
+                      </div>
                     </td>
-                    <td>{u.correo}</td>
+                    <td className="tabla__correo">{u.correo}</td>
                     <td>
-                      <Insignia variante="rol">{etiquetaRol(u.rol)}</Insignia>
+                      <Insignia variante={`rol-${u.rol}`}>{etiquetaRol(u.rol)}</Insignia>
                     </td>
                     <td>
                       <Insignia variante={activo ? 'activo' : 'inactivo'}>{etiquetaEstado(u.estado)}</Insignia>

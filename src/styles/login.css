@@ -1,38 +1,194 @@
+/* Login: escena de la ruta (izquierda) + formulario (derecha) */
 .login {
   min-height: 100vh;
   display: grid;
-  place-items: center;
-  padding: var(--esp-6);
-  background: linear-gradient(160deg, #eef0fb 0%, var(--color-fondo) 55%);
+  grid-template-columns: minmax(0, 1.15fr) minmax(400px, 1fr);
+  background: var(--color-fondo);
+}
+
+/* Escena: un plano de la ciudad sobre azul marino */
+.login__escena {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--esp-10);
+  padding: var(--esp-10) clamp(32px, 5vw, 72px);
+  color: #fff;
+  background-color: var(--color-principal);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    radial-gradient(120% 80% at 85% 10%, #1a1c9a 0%, transparent 60%);
+  background-size: 44px 44px, 44px 44px, auto;
+  overflow: hidden;
+}
+
+.login__nombre {
+  font-family: var(--fuente-titulo);
+  font-stretch: 112%;
+  font-weight: 800;
+  font-size: 1.375rem;
+  letter-spacing: 0.01em;
+}
+
+.login__mensaje {
+  max-width: 30rem;
+}
+.login__lema {
+  font-family: var(--fuente-titulo);
+  font-stretch: 72%;
+  font-weight: 700;
+  font-size: clamp(2.75rem, 5vw, 4.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.015em;
+  margin-bottom: var(--esp-5);
+}
+.login__texto {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 26rem;
+}
+
+.login__ruta {
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  margin-top: auto;
+}
+
+/* Lado del formulario */
+.login__lado {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--esp-6);
+  padding: var(--esp-10) var(--esp-6);
 }
 
 .login__tarjeta {
-  width: min(440px, 100%);
-  background: var(--color-superficie);
-  border: 1px solid var(--color-borde);
-  border-radius: 12px;
-  box-shadow: var(--sombra);
-  padding: var(--esp-8);
+  width: min(400px, 100%);
 }
 
 .login__marca {
   display: grid;
   justify-items: center;
-  gap: var(--esp-3);
-  margin-bottom: var(--esp-6);
+  gap: var(--esp-2);
+  margin-bottom: var(--esp-8);
   text-align: center;
 }
 .login__marca img {
-  width: 160px;
-  height: 160px;
+  width: 132px;
+  height: 132px;
   object-fit: contain;
+  margin-bottom: var(--esp-3);
 }
 .login__marca h1 {
-  font-size: 1.375rem;
+  font-size: 2rem;
+}
+.login__marca p {
+  color: var(--color-texto-suave);
 }
 
 .login__enviar {
   width: 100%;
-  margin-top: var(--esp-2);
-  min-height: 44px;
+  margin-top: var(--esp-3);
+  min-height: 48px;
+  font-size: 1rem;
+}
+
+.login__pie {
+  width: min(400px, 100%);
+  font-size: 0.8125rem;
+  color: var(--color-texto-suave);
+  padding-top: var(--esp-4);
+  border-top: 1px solid var(--color-borde);
+}
+
+/* Ilustración de la ruta (también la usa el inicio) */
+.ruta__sombra {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.14);
+  stroke-width: 10;
+  stroke-linecap: round;
+}
+.ruta__linea {
+  fill: none;
+  stroke: var(--color-ruta);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  animation: ruta-trazo 1.6s cubic-bezier(0.6, 0, 0.3, 1) 0.2s both;
+}
+.ruta__bodega {
+  fill: #fff;
+}
+.ruta__icono {
+  fill: none;
+  stroke: var(--color-principal);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+.ruta__punto {
+  fill: var(--color-ruta);
+  stroke: var(--color-principal);
+  stroke-width: 4;
+}
+.ruta__numero {
+  fill: #fff;
+  font: 700 14px var(--fuente);
+}
+.ruta__etiqueta {
+  fill: rgba(255, 255, 255, 0.85);
+  font: 500 13px var(--fuente);
+}
+.ruta__parada {
+  animation: ruta-parada 0.35s ease-out both;
+  animation-delay: calc(0.25s + var(--i) * 0.42s);
+}
+
+@keyframes ruta-trazo {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes ruta-parada {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ruta__linea,
+  .ruta__parada {
+    animation: none;
+  }
+}
+
+/* Tablet: la escena se vuelve una franja superior */
+@media (max-width: 960px) {
+  .login {
+    grid-template-columns: 1fr;
+  }
+  .login__escena {
+    padding: var(--esp-6);
+    gap: var(--esp-4);
+  }
+  .login__lema {
+    font-size: 2.25rem;
+    margin-bottom: 0;
+  }
+  .login__texto,
+  .login__ruta {
+    display: none;
+  }
 }
