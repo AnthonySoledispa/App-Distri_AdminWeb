@@ -16,7 +16,54 @@ export const MENSAJES = {
   INACTIVIDAD: 'Su sesión expiró por inactividad.',
   SESION_CERRADA: 'Su sesión fue cerrada. Inicie sesión nuevamente.',
   LOGOUT: 'Sesión cerrada correctamente.',
+  UNIDAD_DUPLICADA: 'Ya existe una unidad con ese nombre o abreviatura.',
+  CATEGORIA_DUPLICADA: 'Ya existe una categoría con ese nombre.',
+  PRODUCTO_DUPLICADO: 'Ya existe un producto con ese nombre.',
+  SKU_DUPLICADO: 'Ya existe un producto con ese SKU.',
+  LOTE_VENCIDO: 'El lote está vencido: solo puede darse de baja, no aumentarse.',
+  UNIDAD_NO_ENCONTRADA: 'La unidad ya no existe.',
+  CATEGORIA_NO_ENCONTRADA: 'La categoría ya no existe.',
+  PRODUCTO_NO_ENCONTRADO: 'El producto no existe o fue eliminado.',
+  LOTE_NO_ENCONTRADO: 'El lote no existe para este producto.',
+  UNIDAD_EN_USO: 'No se puede desactivar: hay productos activos que la usan.',
+  CATEGORIA_EN_USO: 'No se puede desactivar: hay productos activos que la usan.',
+  CATEGORIA_INACTIVA: 'La categoría está inactiva. Elija otra.',
+  UNIDAD_INACTIVA: 'La unidad está inactiva. Elija otra.',
+  PRODUCTO_INACTIVO: 'El producto está inactivo: actívelo para registrar entradas.',
+  PRODUCTO_CON_MOVIMIENTOS: 'El producto tiene movimientos de inventario; solo puede desactivarse.',
+  CAMBIO_NO_PERMITIDO:
+    'No se puede cambiar a una categoría o unidad con distinto control de lotes o decimales: el producto tiene movimientos.',
+  CAMBIO_LOTES_NO_PERMITIDO: 'No se puede cambiar el control de lotes: hay productos con movimientos.',
+  LOTE_REQUERIDO: 'Indique el código de lote y la fecha de caducidad.',
+  LOTE_NO_APLICA: 'Esta categoría no controla lotes.',
+  LOTE_CADUCIDAD_DISTINTA: 'Ese lote ya existe con otra fecha de caducidad.',
+  PRODUCTO_SIN_LOTES: 'La categoría de este producto no controla lotes.',
+  STOCK_INSUFICIENTE: 'Stock insuficiente.',
 };
+
+export const CODIGOS_INVENTARIO = [
+  'UNIDAD_DUPLICADA',
+  'CATEGORIA_DUPLICADA',
+  'PRODUCTO_DUPLICADO',
+  'SKU_DUPLICADO',
+  'LOTE_VENCIDO',
+  'UNIDAD_NO_ENCONTRADA',
+  'CATEGORIA_NO_ENCONTRADA',
+  'PRODUCTO_NO_ENCONTRADO',
+  'LOTE_NO_ENCONTRADO',
+  'UNIDAD_EN_USO',
+  'CATEGORIA_EN_USO',
+  'CATEGORIA_INACTIVA',
+  'UNIDAD_INACTIVA',
+  'PRODUCTO_INACTIVO',
+  'PRODUCTO_CON_MOVIMIENTOS',
+  'CAMBIO_NO_PERMITIDO',
+  'CAMBIO_LOTES_NO_PERMITIDO',
+  'LOTE_REQUERIDO',
+  'LOTE_NO_APLICA',
+  'LOTE_CADUCIDAD_DISTINTA',
+  'PRODUCTO_SIN_LOTES',
+];
 
 const CODIGOS_CONEXION = ['RED', 'TIEMPO_AGOTADO', 'RESPUESTA_INVALIDA'];
 
@@ -62,7 +109,12 @@ export function mensajeError(e) {
       return e.mensaje || MENSAJES.GENERICO;
     case 'VALIDACION':
       return e.mensaje || MENSAJES.VALIDACION;
+    case 'STOCK_INSUFICIENTE':
+      return e.detalles?.disponible !== undefined && e.detalles?.disponible !== null
+        ? `Stock insuficiente. Disponible: ${e.detalles.disponible}.`
+        : e.mensaje || MENSAJES.STOCK_INSUFICIENTE;
     default:
+      if (CODIGOS_INVENTARIO.includes(e.codigo)) return MENSAJES[e.codigo];
       if (esServicioNoDisponible(e)) return MENSAJES.SERVICIO_NO_DISPONIBLE;
       return MENSAJES.GENERICO;
   }

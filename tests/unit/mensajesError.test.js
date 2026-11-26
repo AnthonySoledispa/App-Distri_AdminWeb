@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { MENSAJES, mensajeError, mensajeLogin, mensajeSesionInvalida } from '../../src/utils/mensajesError.js';
+import { CODIGOS_INVENTARIO, MENSAJES, mensajeError, mensajeLogin, mensajeSesionInvalida } from '../../src/utils/mensajesError.js';
 
 describe('mensajes de login (U08)', () => {
   it('cada código tiene su texto', () => {
@@ -54,5 +54,28 @@ describe('mensaje al perder la sesión', () => {
     ).toBe(MENSAJES.SESION_CERRADA);
     expect(mensajeSesionInvalida('SESION_CERRADA')).toBe(MENSAJES.SESION_CERRADA);
     expect(mensajeSesionInvalida('TOKEN_INVALIDO')).toBe(MENSAJES.SESION_CERRADA);
+  });
+});
+
+describe('U15 mensajes del Módulo 2', () => {
+  it('cada código nuevo tiene texto en español', () => {
+    expect(CODIGOS_INVENTARIO.length).toBe(21);
+    for (const codigo of CODIGOS_INVENTARIO) {
+      const texto = mensajeError({ estado: 409, codigo });
+      expect(texto, codigo).toBe(MENSAJES[codigo]);
+      expect(texto, codigo).not.toBe(MENSAJES.GENERICO);
+    }
+    expect(mensajeError({ estado: 409, codigo: 'SKU_DUPLICADO' })).toBe('Ya existe un producto con ese SKU.');
+  });
+
+  it('STOCK_INSUFICIENTE incluye el disponible de detalles', () => {
+    const e = { estado: 409, codigo: 'STOCK_INSUFICIENTE', mensaje: 'Stock insuficiente. Disponible: 4 caja.', detalles: { disponible: 4 } };
+    expect(mensajeError(e)).toContain('Disponible: 4');
+    expect(mensajeError({ ...e, detalles: null })).toBe('Stock insuficiente. Disponible: 4 caja.');
+    expect(mensajeError({ estado: 409, codigo: 'STOCK_INSUFICIENTE' })).toBe(MENSAJES.STOCK_INSUFICIENTE);
+  });
+
+  it('un código desconocido da el texto genérico', () => {
+    expect(mensajeError({ estado: 409, codigo: 'NO_EXISTE_ESTE' })).toBe(MENSAJES.GENERICO);
   });
 });

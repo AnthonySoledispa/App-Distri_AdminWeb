@@ -6,6 +6,11 @@ import PanelLayout from './components/layout/PanelLayout.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import InicioPage from './pages/InicioPage.jsx';
 import UsuariosPage from './pages/UsuariosPage.jsx';
+import ProductosPage from './pages/ProductosPage.jsx';
+import ProductoDetallePage from './pages/ProductoDetallePage.jsx';
+import MovimientosPage from './pages/MovimientosPage.jsx';
+import AlertasInventarioPage from './pages/AlertasInventarioPage.jsx';
+import CategoriasUnidadesPage from './pages/CategoriasUnidadesPage.jsx';
 import NoEncontradoPage from './pages/NoEncontradoPage.jsx';
 
 export default function App() {
@@ -20,6 +25,11 @@ export default function App() {
             <Route path="/" element={<PanelLayout />}>
               <Route index element={<InicioPage />} />
               <Route path="usuarios" element={<UsuariosPage />} />
+              <Route path="productos" element={<ProductosPage />} />
+              <Route path="productos/movimientos" element={<MovimientosPage />} />
+              <Route path="productos/alertas" element={<AlertasInventarioPage />} />
+              <Route path="productos/categorias" element={<CategoriasUnidadesPage />} />
+              <Route path="productos/:id" element={<ProductoDetallePage />} />
             </Route>
           </Route>
           <Route path="*" element={<NoEncontradoPage />} />

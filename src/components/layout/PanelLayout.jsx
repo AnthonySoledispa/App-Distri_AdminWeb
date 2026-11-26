@@ -4,11 +4,17 @@ import { useAuth } from '../../context/useAuth.js';
 import BarraLateral from './BarraLateral.jsx';
 import Cabecera from './Cabecera.jsx';
 import AvisoInactividad from '../sesion/AvisoInactividad.jsx';
+import { AlertasInventarioProvider } from '../../context/AlertasInventarioContext.jsx';
 
 const ID_BARRA = 'barra-lateral';
 
 function tituloDe(ruta) {
   if (ruta.startsWith('/usuarios')) return 'Usuarios';
+  if (ruta.startsWith('/productos/movimientos')) return 'Movimientos de inventario';
+  if (ruta.startsWith('/productos/alertas')) return 'Alertas de inventario';
+  if (ruta.startsWith('/productos/categorias')) return 'Categorías y unidades';
+  if (/^\/productos\/[^/]+/.test(ruta)) return 'Producto';
+  if (ruta.startsWith('/productos')) return 'Productos';
   return 'Inicio';
 }
 
@@ -42,6 +48,7 @@ export default function PanelLayout() {
   }
 
   return (
+    <AlertasInventarioProvider>
     <div className="panel">
       <a href="#contenido" className="enlace-salto">
         Saltar al contenido
@@ -64,5 +71,6 @@ export default function PanelLayout() {
       </div>
       {avisoInactividad && <AvisoInactividad />}
     </div>
+    </AlertasInventarioProvider>
   );
 }

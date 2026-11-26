@@ -5,5 +5,6 @@ import './styles/base.css';
 import './styles/layout.css';
 import './styles/componentes.css';
 import './styles/login.css';
+import './styles/inventario.css';
 
 createRoot(document.getElementById('root')).render(<App />);

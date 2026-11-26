@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { ApiError, construirQuery, registrarManejadorSesionInvalida, solicitar } from '../../src/services/api/cliente.js';
+import { ApiError, api, construirQuery, registrarManejadorSesionInvalida, solicitar } from '../../src/services/api/cliente.js';
 import { guardarSesion, leerSesion } from '../../src/services/almacenSesion.js';
 
 function crearAlmacenFalso() {
@@ -142,5 +142,25 @@ describe('cliente HTTP', () => {
     expect(construirQuery({ rol: 'repartidor', estado: '', buscar: 'ana pérez' })).toBe(
       '?rol=repartidor&buscar=ana+p%C3%A9rez',
     );
+  });
+  it('U16: ApiError conserva `detalles` del backend', async () => {
+    fetchFalso.mockResolvedValue(
+      respuesta(409, { ok: false, codigo: 'STOCK_INSUFICIENTE', mensaje: 'x', detalles: { disponible: 3 } }),
+    );
+    const error = await solicitar('POST', '/inventario/ajustes', { cuerpo: {} }).catch((e) => e);
+    expect(error.detalles).toEqual({ disponible: 3 });
+    fetchFalso.mockResolvedValue(respuesta(400, { ok: false, codigo: 'VALIDACION', mensaje: 'x' }));
+    expect((await solicitar('GET', '/x').catch((e) => e)).detalles).toBeNull();
+  });
+
+  it('U16b: api.delete envía DELETE sin cuerpo ni Content-Type', async () => {
+    guardarSesion({ token: 't', ultimaActividad: 1 });
+    fetchFalso.mockResolvedValue(respuesta(200, { ok: true, data: { id: 5, eliminado: true } }));
+    await expect(api.delete('/productos/5')).resolves.toEqual({ id: 5, eliminado: true });
+    const [url, opciones] = fetchFalso.mock.calls[0];
+    expect(url).toMatch(/\/productos\/5$/);
+    expect(opciones.method).toBe('DELETE');
+    expect(opciones.body).toBeUndefined();
+    expect(opciones.headers['Content-Type']).toBeUndefined();
   });
 });

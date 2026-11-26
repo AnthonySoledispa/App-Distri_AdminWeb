@@ -72,7 +72,7 @@ export default function TablaUsuarios({ usuarios, idActual, ocupado, onEditar, o
                           <span className="tabla__nota">No puede desactivar su propia cuenta</span>
                         ) : (
                           <Boton
-                            variante={activo ? 'peligro' : 'primario'}
+                            variante={activo ? 'peligro-suave' : 'secundario'}
                             pequeno
                             onClick={() => onCambiarEstado(u)}
                             aria-label={`${activo ? 'Desactivar' : 'Activar'} a ${u.nombre}`}

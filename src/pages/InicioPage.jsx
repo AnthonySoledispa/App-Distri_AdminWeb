@@ -4,7 +4,7 @@ import { useAuth } from '../context/useAuth.js';
 /* Orden de desarrollo de AGENTES.md: cada módulo es una parada de la ruta. */
 const MODULOS = [
   { nombre: 'Usuarios y acceso', detalle: 'Cuentas de administradores y repartidores.', ruta: '/usuarios', accion: 'Gestionar usuarios' },
-  { nombre: 'Productos e inventario', detalle: 'Catálogo, categorías y stock.' },
+  { nombre: 'Productos e inventario', detalle: 'Catálogo, categorías y stock.', ruta: '/productos', accion: 'Gestionar productos' },
   { nombre: 'Tiendas', detalle: 'Clientes, crédito y datos de contacto.' },
   { nombre: 'Pedidos', detalle: 'Registro y validación de stock y crédito.' },
   { nombre: 'Despachos y rutas', detalle: 'Asignación de rutas a repartidores.' },
@@ -21,7 +21,7 @@ export default function InicioPage() {
     <>
       <div className="inicio__saludo">
         <h2>Bienvenido, {usuario?.nombre}</h2>
-        <p>Ya puede gestionar las cuentas de su equipo. Las demás secciones se activarán en este orden.</p>
+        <p>Ya puede gestionar usuarios y productos con su inventario. Las demás secciones se activarán en este orden.</p>
       </div>
 
       <section className="hoja-ruta" aria-labelledby="hoja-ruta-titulo">

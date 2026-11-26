@@ -1,4 +1,6 @@
 import { NavLink } from 'react-router';
+import { useAlertasInventario } from '../../context/useAlertasInventario.js';
+import { textoContador, totalAlertas } from '../../utils/alertas.js';
 import logo from '../../assets/logo-distrigo.png';
 
 /* Iconos de trazo (24x24). Son decorativos: el texto del enlace da el nombre. */
@@ -16,7 +18,7 @@ const ICONOS = {
 
 const SECCIONES = [
   { etiqueta: 'Inicio', icono: 'inicio', ruta: '/', fin: true },
-  { etiqueta: 'Productos', icono: 'productos' },
+  { etiqueta: 'Productos', icono: 'productos', ruta: '/productos', contador: true },
   { etiqueta: 'Tiendas', icono: 'tiendas' },
   { etiqueta: 'Pedidos', icono: 'pedidos' },
   { etiqueta: 'Rutas', icono: 'rutas' },
@@ -35,6 +37,8 @@ function Icono({ nombre }) {
 }
 
 export default function BarraLateral({ id, abierta, onNavegar }) {
+  const { totales } = useAlertasInventario();
+  const alertas = totalAlertas(totales);
   return (
     <>
       <aside id={id} className={`barra ${abierta ? 'barra--abierta' : ''}`} aria-label="Barra lateral">
@@ -52,6 +56,14 @@ export default function BarraLateral({ id, abierta, onNavegar }) {
                   <NavLink to={s.ruta} end={s.fin} className="barra__item" onClick={onNavegar}>
                     <Icono nombre={s.icono} />
                     <span className="barra__texto">{s.etiqueta}</span>
+                    {s.contador && alertas > 0 && (
+                      <>
+                        <span className="barra__contador" aria-hidden="true">
+                          {alertas}
+                        </span>
+                        <span className="solo-lectores">{textoContador(alertas)}</span>
+                      </>
+                    )}
                   </NavLink>
                 ) : (
                   <span className="barra__item barra__item--deshabilitado" aria-disabled="true" role="link">

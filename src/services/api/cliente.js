@@ -2,13 +2,14 @@ import { API_URL, TIEMPO_MAXIMO_MS } from '../../config.js';
 import { obtenerToken, actualizarSesion } from '../almacenSesion.js';
 
 export class ApiError extends Error {
-  constructor({ estado = 0, codigo = 'ERROR', mensaje = '', errores = [] } = {}) {
+  constructor({ estado = 0, codigo = 'ERROR', mensaje = '', errores = [], detalles = null } = {}) {
     super(mensaje || codigo);
     this.name = 'ApiError';
     this.estado = estado;
     this.codigo = codigo;
     this.mensaje = mensaje;
     this.errores = errores;
+    this.detalles = detalles;
   }
 }
 
@@ -92,6 +93,7 @@ export async function solicitar(metodo, ruta, { cuerpo, query, autenticado = tru
     codigo: json?.codigo || 'ERROR',
     mensaje: json?.mensaje || '',
     errores: Array.isArray(json?.errores) ? json.errores : [],
+    detalles: json?.detalles ?? null,
   });
 
   if (autenticado) {
@@ -110,4 +112,5 @@ export const api = {
   post: (ruta, cuerpo, opciones) => solicitar('POST', ruta, { ...opciones, cuerpo }),
   put: (ruta, cuerpo, opciones) => solicitar('PUT', ruta, { ...opciones, cuerpo }),
   patch: (ruta, cuerpo, opciones) => solicitar('PATCH', ruta, { ...opciones, cuerpo }),
+  delete: (ruta, opciones) => solicitar('DELETE', ruta, opciones),
 };

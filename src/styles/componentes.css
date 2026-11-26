@@ -42,6 +42,14 @@
 .boton--peligro:hover:not(:disabled) {
   background: #570404;
 }
+.boton--peligro-suave {
+  background: transparent;
+  color: var(--color-error);
+  border-color: var(--color-error);
+}
+.boton--peligro-suave:hover:not(:disabled) {
+  background: var(--color-error-fondo);
+}
 .boton--enlace {
   background: transparent;
   color: var(--color-principal);

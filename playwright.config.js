@@ -5,12 +5,14 @@ export default defineConfig({
   testDir: 'tests/e2e',
   timeout: 30_000,
   expect: { timeout: 7_000 },
+  globalTeardown: './tests/e2e/teardown.js',
   workers: 1,
   fullyParallel: false,
   reporter: [['list']],
   use: {
     baseURL: 'http://localhost:5174',
     locale: 'es-EC',
+    timezoneId: 'America/Guayaquil', // fechas estables (zona del negocio)
     trace: 'off',
     screenshot: 'off',
     video: 'off',
